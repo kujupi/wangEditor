@@ -3,6 +3,7 @@
 	typeof define === 'function' && define.amd ? define(factory) :
 	(global.wangEditor = factory());
 }(this, (function () { 'use strict';
+console.log(7777)
 /*
     poly-fill
 */
@@ -1350,6 +1351,7 @@ Link.prototype = {
     onClick: function onClick(e) {
         var editor = this.editor;
         var $linkelem = void 0;
+
         if (this._active) {
             // 当前选区在链接里面
             $linkelem = editor.selection.getSelectionContainerElem();
@@ -1360,12 +1362,7 @@ Link.prototype = {
             editor.selection.createRangeByElem($linkelem);
             editor.selection.restoreSelection();
             // 显示 panel
-            if($linkelem[0].getElementsByTagName('img').length > 0){
-                var imgStr = $linkelem[0].innerHTML.trim().replace(/\"/g,"'");
-                this._createPanel(imgStr, $linkelem.attr('href'));
-            }else{
-                this._createPanel($linkelem.text(), $linkelem.attr('href'));
-            }
+            this._createPanel($linkelem.text(), $linkelem.attr('href'));
         } else {
             // 当前选区不在链接里面
             if (editor.selection.isSelectionEmpty()) {
@@ -3824,6 +3821,7 @@ API.prototype = {
     // 选中区域的文字
     getSelectionText: function getSelectionText() {
         var range = this._currentRange;
+        console.log(range)
         if (range) {
             return this._currentRange.toString();
         } else {
@@ -4060,7 +4058,7 @@ UploadImg.prototype = {
             }
         }
 
-        editor.cmd.do('insertHTML', '<a href="javascript:;" target="_blank"><img src="' + link + '" style="max-width:100%;"/></a>');
+        editor.cmd.do('insertHTML', '<img src="' + link + '" style="max-width:100%;"/>');
 
         // 验证图片 url 是否有效，无效的话给出提示
         var img = document.createElement('img');
